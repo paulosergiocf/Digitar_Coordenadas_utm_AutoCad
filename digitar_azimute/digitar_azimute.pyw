@@ -149,8 +149,6 @@ def concluir_text():
     with open(criar_arquivo, 'r') as fd:
         txt = fd.read()  # Ler todo o arquivo
 
-        # Substituir hostname= por hostname=192.168.1.1 em todas as
-        # ocorrências no texto lido
         txt = txt.replace(r"´´´´",r'"')
 
     # Abrir o arquivo em modo de escrita
