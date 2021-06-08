@@ -6,13 +6,12 @@
 
  Inserção de listas de pontos UTM no AutoCAD.
 
-## Instalação
+## Instalação do módulo
 
 Windows:
-execute o script:
 
 ```sh
- modulos_install.bat
+pip install PyAutocad
 ```
 
 ## Exemplo de Uso
