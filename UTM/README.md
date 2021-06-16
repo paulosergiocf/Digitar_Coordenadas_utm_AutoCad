@@ -6,7 +6,7 @@
 
  Inserção de listas de pontos UTM no AutoCAD.
 
-## Instalação
+## Instalação do módulo
 
 Windows:
 
@@ -32,4 +32,3 @@ Pretendo posteriormente inserir uma opção para ler um arquivo **.csv** e extra
 Paulo Sergio de Campos Filho – [@paulosergio_cf](https://twitter.com/paulosergio_cf) – paulosergiocf@protonmail.com
 
 [https://github.com/paulosergiocf](https://github.com/paulosergiocf)
-
