@@ -9,10 +9,11 @@
 ## Instalação
 
 Windows:
-execute o script:
 
-```sh
- modulos_install.bat
+módulo
+
+```bat
+ pip install PyAutocad
 ```
 
 ## Exemplo de Uso
@@ -21,6 +22,10 @@ Vejamos agora um exemplo de como utilizar a Ferramenta.
 Após cumprir todos os requisitos de instalação abra um desenho novo no AutoCad e execute o script.
 
 ![2](https://user-images.githubusercontent.com/49497668/100269631-9be23f00-2f35-11eb-9914-ad30b59cbc4d.png)
+
+## Pespectiva de atualização.
+
+Pretendo posteriormente inserir uma opção para ler um arquivo **.csv** e extrair dele a lista de coordenadas  e digita-las automaticamente.
 
 ## Autor
 
