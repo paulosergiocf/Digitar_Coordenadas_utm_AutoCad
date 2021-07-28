@@ -7,7 +7,7 @@ Este repositório é destinado a reunião de ferramentas utilizadas para facilit
 ### Disponível aqui:
 1. [Digitar Azimute] (https://github.com/paulosergiocf/topograph_tools/tree/main/digitar_azimute)
 2. [Digitar Coordenadas UTM no AutoCad] (https://github.com/paulosergiocf/topograph_tools/tree/main/UTM)
-3. [Calculadora de conversão de Área] (https://github.com/paulosergiocf/topograph_tools/tree/main/CalculadoraDeArea)
+
 
 <hr>
 
