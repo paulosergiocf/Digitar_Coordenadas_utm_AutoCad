@@ -12,7 +12,6 @@ from tkinter import *
 #para funcionamento correto o ideal é abrir o autocad antes do script e confirmar a inicialização pelo Pront de Comando.
 acad = Autocad()
 acad.prompt("Ferramenta de inserção de coordenadas iniciada\n")
-print (acad.doc.Name)
 
 #Configurações basicas
 #----------------Cores------------------
