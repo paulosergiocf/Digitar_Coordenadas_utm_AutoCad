@@ -1,0 +1,6 @@
+2024-04-18 19:50:51,119 | INFO | Main - inicio da execução da aplicação.
+2024-04-18 19:50:51,188 | INFO | App - carregada as configurações da interface.
+2024-04-18 19:50:59,985 | ERROR | App - .!frame.!frame2.!entry - É necessário digitar um valor no campo descrição..
+2024-04-18 19:50:59,986 | ERROR | App - .!frame.!frame3.!entry - É necessário digitar um valor no campo coordenada.
+2024-04-18 19:50:59,986 | ERROR | App - .!frame.!frame4.!entry - É necessário digitar um valor no campo coordenada.
+2024-04-18 19:51:12,102 | INFO | Main - fim da execução.
