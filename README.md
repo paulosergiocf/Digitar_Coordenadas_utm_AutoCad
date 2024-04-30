@@ -6,14 +6,25 @@
 
  Inserção de listas de pontos UTM no AutoCAD.
 
-## Instalação do módulo
 
-Windows:
+## Preparação do ambiente
 
-módulo
+[![Python 3.11.5](https://img.shields.io/badge/python-3.11.5-red.svg)](https://www.python.org/downloads/release/python-360/)
 
-```bat
- pip install PyAutocad
+Para utilizar o projeto crie um ambiente virtual.
+
+```sh
+    python -m venv .venv
+```
+
+Em seguida ative o ambiente em sua maquina.
+```sh
+    source .venv/bin/activate
+```
+Agora instale os dependencias nescessárias:
+
+```sh
+    pip install -r requeriments
 ```
 
 ## Exemplo de Uso
@@ -29,6 +40,8 @@ Pretendo posteriormente inserir uma opção para ler um arquivo **.csv** e extra
 
 ## Autor
 
-Paulo Sergio de Campos Filho – [@paulosergio_cf](https://twitter.com/paulosergio_cf) – paulosergiocf@protonmail.com
+Paulo Sergio de Campos Filho – [@paulosergio_cf](https://twitter.com/paulosergio_cf) 
+
+paulosergiocf@protonmail.com
 
 [https://github.com/paulosergiocf](https://github.com/paulosergiocf)
