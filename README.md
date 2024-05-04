@@ -34,17 +34,18 @@ Agora clique no icone de download ou pressione o atalho: ```ctrl + shift + s```
 
 Pronto, todas as coordendas serão exibidas.
 
-![exemplo de uso](assets/exemplo_de_uso.gif)
+![exemplo de uso](assets/uso_aplicacao.png)
+![pontos inseridos](assets/pontos_inseridos.png)
 
 ### E se acontecer um problema?
 
 Se houver alguma problema durante a execução a aplicação indicará na tela.
 
-![exceção](assets/nenhum_arquivo_aberto.gif)]
+![exceção](assets/nenhum_arquivo_aberto.png)
 
 A execução da aplicação também pode ser monitorada na pasta __/logs__ dentro da pasta da aplicação, esta pasta é criada automaticamente na primeira execução.
 
-![logs](assets/log_aplicação.gif)
+![logs](assets/log.png)
 
 ## Desenvolvimento
 
