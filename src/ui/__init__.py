@@ -6,7 +6,6 @@ from src.entities.ponto import Ponto
 class App(tk.Frame):
     # ------- Cores --------
     FUNDO = "#23272B" 
-    ROSA_CLARO = "#7E3735"
     LARANJA_MOSTARDA = "#8C3F23"
     CINZA_CLARO = "#F2F2F2"
     ERRO_CAMPO = "#F2BFBB"

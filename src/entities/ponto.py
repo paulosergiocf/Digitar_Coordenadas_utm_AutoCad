@@ -7,3 +7,5 @@ class Ponto:
         
     def __str__(self) -> str:
         return(f"{self.descricao} - X: {(self.coordenada_x):.2f} - Y: {self.coordenada_y:.2f}")
+    
+    

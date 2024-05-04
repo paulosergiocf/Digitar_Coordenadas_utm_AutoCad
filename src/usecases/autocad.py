@@ -29,15 +29,6 @@ class AutoCadTool():
             self.__logger.log_error(erro)
             raise FileExistsError("Nenhum arquivo DWG aberto.")
         
-    def prompt(self, msg: str):
-        """
-        Apresenta mensagem no cli autocad.
-
-        Args:
-            msg (str): mensagem para cli autocad
-        """
-        self.acad.prompt(f"{msg}{self.QUEBRA_LINHA}")
-    
     def inserir_ponto(self, ponto: Ponto):
         """
         Insere ponto do Autocad.
@@ -48,7 +39,7 @@ class AutoCadTool():
         try:
             ponto_tmp = APoint(ponto.coordenada_x, ponto.coordenada_y)
             self.acad.model.AddText('%s' % ponto.descricao, ponto_tmp, self.TAMANHO_TXT)
-            self.acad.model.AddCircle(ponto_tmp, 2)
+            self.acad.model.AddCircle(ponto_tmp, self.RAIO_CIRCLE)
             
             for text in self.acad.iter_objects('Text'):
                 text.InsertionPoint = APoint(text.InsertionPoint)
