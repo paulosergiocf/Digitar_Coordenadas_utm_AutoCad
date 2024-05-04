@@ -1,8 +1,5 @@
-import os
 import tkinter as tk
-from tkinter import font, filedialog, ttk
-from src.usecases.logger import Logger
-from src.usecases.util import Util
+from src.entities.logger import Logger
 from src.services.service import Service
 from src.entities.ponto import Ponto
 
@@ -17,7 +14,7 @@ class App(tk.Frame):
     FONTE_REGULAR = (None, 11)
     FONTE_TITULO = (None, 12)
     
-    #
+    # parametros
     CASAS_DECIMAIS = 2
     
     def __init__(self, janela):
@@ -38,15 +35,14 @@ class App(tk.Frame):
         self.janela.geometry("400x300")
         self.janela.title("Dig. coordenadas UTM")
         self.janela["bg"] = self.FUNDO
-        estilo = ttk.Style()
-        estilo.theme_use('default')
-        estilo.configure('Custom.TButton', background=self.FUNDO) 
+
     
         photo = tk.PhotoImage(file ='src/icon/icon.png')
         self.janela.iconphoto(False, photo)
         self.__logger.log_info("carregada as configurações da interface")
     def iniciar_service(self):
         self.service = Service()
+        
     def atualizar_tela(self):
         self.container_principal.forget()
         self.inicio()
@@ -86,7 +82,6 @@ class App(tk.Frame):
         self.ent_coordx = tk.Entry(container_coordx, width=15)
         self.ent_coordx.pack()
         
-        
         container_texto = self.container(self.container_principal)
         container_texto.pack()
         coordx = tk.Label(container_texto, text=f"{self.coordenada_anterior}",font=self.FONTE_REGULAR, bg=self.FUNDO, fg=self.LARANJA_MOSTARDA)
@@ -94,45 +89,61 @@ class App(tk.Frame):
         
         container_botao = self.container(self.container_principal)
         container_botao.pack()
-        bt_inserir = tk.Button(container_botao,text="Inserir", relief="flat",font=self.FONTE_REGULAR, border=0, bg=self.FUNDO, fg=self.CINZA_CLARO, width=10, height=1, command=self.adicionar_ponto)
+        bt_inserir = tk.Button(container_botao,text="Inserir", font=self.FONTE_REGULAR,  border=0.5, bg=self.FUNDO, fg=self.CINZA_CLARO, width=10, height=1, command=self.adicionar_ponto)
         bt_inserir.pack()
         
     def adicionar_ponto(self):
         numero_erro = 0
         
         try:
-            descricao = self.formatarTextoEntrada(self.ent_descricao.get())
+            descricao = self.formatar_texto_entrada(self.ent_descricao.get())
             self.ent_descricao["bg"] = "White"
         except Exception as erro:
-            self.__logger.log_error(f"{self.ent_descricao} - {erro}")
+            self.__logger.log_error(f"descrição - {erro}")
             self.ent_descricao["bg"] = self.ERRO_CAMPO
             numero_erro += 1
             
         try:
-            coordy = self.formatarCoordenadaEntrada(self.ent_coordy.get())
+            coordy = self.formatar_coordenadaEntrada(self.ent_coordy.get())
             self.ent_coordy["bg"] = "White"
         except Exception as erro:
-            self.__logger.log_error(f"{self.ent_coordy} - {erro}")
+            self.__logger.log_error(f"coordenada y - {erro}")
             self.ent_coordy["bg"] = self.ERRO_CAMPO
             numero_erro += 1
             
         try:
-            coordx = self.formatarCoordenadaEntrada(self.ent_coordx.get())
+            coordx = self.formatar_coordenadaEntrada(self.ent_coordx.get())
             self.ent_coordx["bg"] = "White"
         except Exception as erro:
-            self.__logger.log_error(f"{self.ent_coordx} - {erro}")
+            self.__logger.log_error(f" coordenada x - {erro}")
             self.ent_coordx["bg"] = self.ERRO_CAMPO
             numero_erro += 1
-        
-        if numero_erro <= 0:
+            
+        try:
+            if numero_erro != 0:
+                raise ValueError("Corrija os campos indicados.")
+            
             ponto = Ponto(descricao, coordx, coordy)
-            self.coordenada_anterior = f"{ponto.descricao} - X:{ponto.coordenada_x} - Y:{ponto.coordenada_y}"
-            self.__logger.log_info(self.coordenada_anterior)
+            
             self.ent_descricao.delete(0, tk.END)
             self.ent_coordy.delete(0, tk.END)
             self.ent_coordx.delete(0, tk.END)
             self.atualizar_tela()
             
+            self.iniciar_service()
+            self.service.inserir_coordenada(ponto=ponto)
+            
+        except ValueError as erro:
+            self.__logger.log_error(f"{erro}")
+            self.caixa_de_mensagem("Erro de Preenchimento",erro)
+              
+        except Exception as erro:
+            self.__logger.log_error(f"{erro}")
+            self.caixa_de_mensagem("Erro",erro)
+            
+        else:
+            self.coordenada_anterior = f"{ponto}"
+            self.__logger.log_info(self.coordenada_anterior)        
         
     def container(self, janela, fundo=FUNDO, margem_horizontal=5, margem_vertical=5):
         """
@@ -151,7 +162,7 @@ class App(tk.Frame):
         container = tk.Frame(janela, background=fundo, padx=margem_horizontal, pady=margem_vertical)
         return container
     
-    def formatarTextoEntrada(self, texto):
+    def formatar_texto_entrada(self, texto):
         """
         Args:
             texto (str): descrição do texto
@@ -168,7 +179,7 @@ class App(tk.Frame):
 
         return texto
     
-    def formatarCoordenadaEntrada(self, coordenada):
+    def formatar_coordenadaEntrada(self, coordenada):
         """
         Args:
             coordenada (str): coordenada
@@ -186,3 +197,27 @@ class App(tk.Frame):
         coordenada = round(coordenada, self.CASAS_DECIMAIS)
         
         return coordenada
+    
+    def caixa_de_mensagem(self, title: str, mensagem: str ):
+        """
+            Cria caixa de mensagem para poupups na tela.
+            O tkinter nativamente possui o messagebox para esse tipo de situação,
+            mas criar essa implementação permite um grau de custumização mais elevado.
+        Args:
+            title (str): titulo da janela
+            mensagem (str): mensagem.
+        """
+        caixa_mensagem = tk.Tk()
+        caixa_mensagem.title(title)
+        caixa_mensagem.geometry("300x100")
+        caixa_mensagem["bg"] = self.FUNDO
+        
+        container = tk.Frame(caixa_mensagem, padx=5, pady=10, bg=self.FUNDO)
+        container.pack()
+        
+        mensagem_label = tk.Label(container, text=mensagem, bg=self.FUNDO, fg=self.CINZA_CLARO )
+        mensagem_label.pack()
+        mensagem_button = tk.Button(container, text="ok", font=self.FONTE_REGULAR,  border=0.5, bg=self.FUNDO, fg=self.CINZA_CLARO, width=10, height=1, command=caixa_mensagem.destroy)
+        mensagem_button.pack()
+        
+        caixa_mensagem.mainloop()

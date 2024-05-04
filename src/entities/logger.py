@@ -1,6 +1,5 @@
 import os
 import logging
-from src.usecases.util import Util
 from datetime import datetime
 
 class Logger(logging.Logger):
@@ -15,7 +14,7 @@ class Logger(logging.Logger):
             nivel (opcional): tipo do log conforme lib logging. padrão logging.INFO.
         """
         super().__init__(name=nome, level=nivel)
-        Util.diretorio_criar(self.DIRETORIO_LOG)
+        self.__criar_diretorio_log(self.DIRETORIO_LOG)
         self.diretorio = os.path.join(os.getcwd(), self.DIRETORIO_LOG)
         self.nome = nome
         self.arquivo_log = os.path.join(self.diretorio, f"{str(datetime.now().strftime('%Y-%m-%d'))}.log")
@@ -60,3 +59,11 @@ class Logger(logging.Logger):
         """
         self.error(f"{self.nome} - {mensagem}.")
         
+    def __criar_diretorio_log(self, diretorio: str):
+        """Descrição
+
+        Args:
+            diretorio (str): diretorio
+        """
+        if not os.path.exists(diretorio):
+            os.makedirs(diretorio)
