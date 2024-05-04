@@ -25,6 +25,7 @@ class App(tk.Frame):
         self.coordenada_anterior = '>'
         self.__config()
         self.inicio()
+        self.iniciar_service()
         
     
     def __config(self):
@@ -37,12 +38,16 @@ class App(tk.Frame):
         self.janela["bg"] = self.FUNDO
 
     
-        photo = tk.PhotoImage(file ='src/icon/icon.png')
+        photo = tk.PhotoImage(file ='icon/icon.png')
         self.janela.iconphoto(False, photo)
         self.__logger.log_info("carregada as configurações da interface")
     def iniciar_service(self):
-        self.service = Service()
-        
+        try:
+            self.service = Service()
+        except Exception as erro:
+            self.__logger.log_error(f"{erro}")
+            self.caixa_de_mensagem("Erro",erro)
+            
     def atualizar_tela(self):
         self.container_principal.forget()
         self.inicio()
@@ -68,19 +73,19 @@ class App(tk.Frame):
         self.ent_descricao = tk.Entry(container_desc, width=15)
         self.ent_descricao.pack()
         
-        container_coordy = self.container(self.container_principal)
-        container_coordy.pack()
-        coordy = tk.Label(container_coordy, text="Coordenada Y",font=self.FONTE_REGULAR, bg=self.FUNDO, fg=self.CINZA_CLARO, padx=5)
-        coordy.pack(side='left')
-        self.ent_coordy = tk.Entry(container_coordy, width=15)
-        self.ent_coordy.pack()
-        
         container_coordx = self.container(self.container_principal)
         container_coordx.pack()
         coordx = tk.Label(container_coordx, text="Coordenada X",font=self.FONTE_REGULAR, bg=self.FUNDO, fg=self.CINZA_CLARO, padx=5)
         coordx.pack(side='left')
         self.ent_coordx = tk.Entry(container_coordx, width=15)
         self.ent_coordx.pack()
+        
+        container_coordy = self.container(self.container_principal)
+        container_coordy.pack()
+        coordy = tk.Label(container_coordy, text="Coordenada Y",font=self.FONTE_REGULAR, bg=self.FUNDO, fg=self.CINZA_CLARO, padx=5)
+        coordy.pack(side='left')
+        self.ent_coordy = tk.Entry(container_coordy, width=15)
+        self.ent_coordy.pack()
         
         container_texto = self.container(self.container_principal)
         container_texto.pack()
@@ -128,22 +133,30 @@ class App(tk.Frame):
             self.ent_descricao.delete(0, tk.END)
             self.ent_coordy.delete(0, tk.END)
             self.ent_coordx.delete(0, tk.END)
-            self.atualizar_tela()
             
-            self.iniciar_service()
+            if self.service == None:
+                self.iniciar_service()
+            
             self.service.inserir_coordenada(ponto=ponto)
             
         except ValueError as erro:
             self.__logger.log_error(f"{erro}")
             self.caixa_de_mensagem("Erro de Preenchimento",erro)
-              
+            
+        except FileExistsError as erro:
+            self.__logger.log_error(f"{erro}")
+            self.caixa_de_mensagem("Erro arquivo", erro)
+            
         except Exception as erro:
             self.__logger.log_error(f"{erro}")
             self.caixa_de_mensagem("Erro",erro)
             
         else:
-            self.coordenada_anterior = f"{ponto}"
-            self.__logger.log_info(self.coordenada_anterior)        
+            self.coordenada_anterior = f"anterior\n {ponto}"
+            self.__logger.log_info(self.coordenada_anterior)      
+        
+        finally:
+            self.atualizar_tela()  
         
     def container(self, janela, fundo=FUNDO, margem_horizontal=5, margem_vertical=5):
         """

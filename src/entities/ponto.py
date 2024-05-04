@@ -6,4 +6,4 @@ class Ponto:
         self.coordenada_y: str = coordenada_y
         
     def __str__(self) -> str:
-        return(f"{self.descricao} - X: {self.coordenada_x} - Y: {self.coordenada_y}")
+        return(f"{self.descricao} - X: {(self.coordenada_x):.2f} - Y: {self.coordenada_y:.2f}")

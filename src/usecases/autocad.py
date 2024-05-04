@@ -1,6 +1,5 @@
 from src.entities.ponto import Ponto
 from pyautocad import Autocad, APoint
-
 from src.entities.logger import Logger
 
 class AutoCadTool():
@@ -46,9 +45,14 @@ class AutoCadTool():
         Args:
             ponto (Ponto): _description_
         """
-        ponto_tmp = APoint(ponto.coordenada_x, ponto.coordenada_y)
-        self.acad.model.AddText('%s' % ponto.descricao, ponto_tmp, self.TAMANHO_TXT)
-        self.acad.model.AddCircle(ponto_tmp, 2)
-        
-        for text in self.acad.iter_objects('Text'):
-            text.InsertionPoint = APoint(text.InsertionPoint)
+        try:
+            ponto_tmp = APoint(ponto.coordenada_x, ponto.coordenada_y)
+            self.acad.model.AddText('%s' % ponto.descricao, ponto_tmp, self.TAMANHO_TXT)
+            self.acad.model.AddCircle(ponto_tmp, 2)
+            
+            for text in self.acad.iter_objects('Text'):
+                text.InsertionPoint = APoint(text.InsertionPoint)
+                
+        except Exception as erro:
+            self.__logger.log_error(erro)
+            raise erro
