@@ -1,6 +1,6 @@
-from src.ui import App
 import tkinter as tk
-from src.usecases.logger import Logger
+from src.ui import App
+from src.entities.logger import Logger
 
 if __name__ == '__main__':
     logger = Logger(nome='Main')
@@ -17,3 +17,5 @@ if __name__ == '__main__':
 
     finally:
         logger.log_info("fim da execução")
+        
+    
