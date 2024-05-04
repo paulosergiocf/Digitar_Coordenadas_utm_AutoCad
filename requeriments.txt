@@ -1,0 +1,2 @@
+comtypes==1.4.1
+pyautocad==0.2.0
